@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} News App | Job Update {% endblock%}
+
+{% block content %}
+
+<div id="mycarousel" style="background-color: black;">
+  <input type="radio" name="position" />
+  <input type="radio" name="position" checked/>
+  <input type="radio" name="position" />
+  <input type="radio" name="position" />
+  <!-- <input type="radio" name="position" /> -->
+  <main id="carousel">
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <!-- <div class="item"></div> -->
+    <main>
+</div>
+
+<div class="row" id="news-body">
+
+    <div class="col-md-8">
+        <div id="news-header">
+            <h5> Latest Job Alerts >>></h5>
+        </div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            {% if total_jobs > 0 %}
+              {% for job in jobs %}
+                <tbody>
+                  <tr>
+                    <td>{{story.job_title}}</td>
+                  </tr>
+                </tbody>
+              {% endfor %}
+            {% else %}
+            <p> There are no available jobs </p>
+            {% endif %}
+          </table>
+
+        {% if jobs.has_other_pages %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if jobs.has_previous %}
+                      <li class="page-item"><a class="page-link" href="?page={{ jobs.previous_page_number }}" aria-label="Previous">
+                          <span aria-hidden="true" >&laquo;</span>
+                          <span class="sr-only">Previous</span>
+                          </a>
+                      </li>
+                    {% else %}
+                      <li class=" page-item disabled page-link"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in jobs.paginator.page_range %}
+                      {% if jobs.number == i %}
+                          <li class="active page-item page-link"><span style="color: red;">{{ i }} <span class="sr-only">(current)</span></span></li>
+                      {% else %}
+                          <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if jobs.has_next %}
+                      <li class="page-item"><a class="page-link" href="?page={{ jobs.next_page_number }}" aria-label="Next">
+                          <span aria-hidden="true" >&raquo;</span>
+                          <span class="sr-only">Next</span>
+                          </a>
+                      </li>
+                    {% else %}
+                      <li class=" page-item disabled page-link"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %} 
+        
+    </div>
+
+    <div class="col-md-4">
+        <h3> Latest Jobs</h3>
+    </div>
+</div>
+
+{% endblock %}
